@@ -14,6 +14,7 @@ const v1 = require('./routes/v1');
 var cors = require('cors');
 const helmet = require('helmet');
 const passport = require('passport');
+const cryptoService = require('./services/crypto.service');
 
 app.use(helmet());
 app.use(cors());
@@ -37,9 +38,9 @@ if (CONFIG.app === 'local') {
 }
 
 app.use(function (req, res, next) {
-  // if (req && req.headers && req.headers.authorization) {
-  //   req.headers.authorization = cryptoService.decrypt(req.headers.authorization);
-  // }
+  if (req && req.headers && req.headers.authorization) {
+    req.headers.authorization = cryptoService.decrypt(req.headers.authorization);
+  }
   // Website you wish to allow to connect
   res.setHeader('Access-Control-Allow-Origin', '*');
   // Request methods you wish to allow
