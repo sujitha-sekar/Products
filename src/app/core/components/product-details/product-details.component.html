@@ -1,5 +1,45 @@
 <div class="home">
   <h1>Add Products Here...</h1>
   <!-- Form -->
+  <form [formGroup]="productsForm">
+    <div fxLayout="row" fxLayoutGap="5%" fxLayout.lt-md="column" fxLayoutGap.lt-md="0">
+      <!-- product name -->
+      <div fxLayout="row" fxFlex="50%" fxLayout.lt-sm="column" fxLayoutAlign="center center">
+        <mat-label fxFlex="40%">Product Name</mat-label>
+        <mat-form-field fxFlex="60%" appearance="outline">
+          <input matInput formControlName="productName">
+        </mat-form-field>
+      </div>
+      <!-- product description -->
+      <div fxLayout="row" fxFlex="50%" fxLayout.lt-sm="column" fxLayoutAlign="center center">
+        <mat-label fxFlex="40%">Product Description</mat-label>
+        <mat-form-field fxFlex="60%" appearance="outline">
+          <input matInput formControlName="description">
+        </mat-form-field>
+      </div>
+    </div>
+  
+    <div fxLayout="row" fxLayoutGap="5%" fxLayout.lt-md="column" fxLayoutGap.lt-md="0">
+      <!-- product Price -->
+      <div fxLayout="row" fxFlex="50%" fxLayout.lt-sm="column" fxLayoutAlign="center center">
+        <mat-label fxFlex="40%">Product Price</mat-label>
+        <mat-form-field fxFlex="60%" appearance="outline">
+          <input matInput formControlName="price">
+        </mat-form-field>
+      </div>
+      <!-- product Categories -->
+      <div fxLayout="row" fxFlex="50%" fxLayout.lt-sm="column" fxLayoutAlign="center center">
+        <mat-label fxFlex="40%">Product Categories</mat-label>
+        <mat-form-field fxFlex="60%" appearance="outline">
+          <mat-select formControlName="categoryId">
+            <mat-option *ngFor="let item of category" [value]="item?.id">{{item?.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
 
+  </form>
+  <div fxLayoutAlign="center center">
+    <button mat-raised-button color="warn" (click)="onSave()">Save</button>
+  </div>
 </div>

@@ -34,9 +34,9 @@ export class ProductListComponent implements OnInit {
     this.productService.getAllProducts().subscribe((res: any) => {
       console.log('All Products: ', res);
       if (res) {
-        this.dataSource = new MatTableDataSource(res);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
+        // this.dataSource = new MatTableDataSource(res);
+        // this.dataSource.sort = this.sort;
+        // this.dataSource.paginator = this.paginator;
       }   
     });
   }
