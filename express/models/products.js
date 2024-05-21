@@ -24,18 +24,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    createdOn: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    expriedDate: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    availability: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     created: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
