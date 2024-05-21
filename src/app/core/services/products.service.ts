@@ -9,6 +9,6 @@ export class ProductsService {
   constructor(private httpService: HttpRoutingService) { }
 
   getAllProducts() {
-    return this.httpService.getMethod('objects');
+    return this.httpService.getMethod('product');
   }
 }
