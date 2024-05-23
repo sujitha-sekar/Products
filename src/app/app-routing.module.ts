@@ -8,7 +8,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/app', pathMatch: 'full' },
   { path: 'app', component: NavbarComponent, children: [
     { path: 'productList', component: ProductListComponent },   
-    { path: 'productDetails', component: ProductDetailsComponent }
+    { path: 'productDetails', component: ProductDetailsComponent },
+    { path: 'productDetails/:data/:id', component: ProductDetailsComponent }
   ] }
 ];
 

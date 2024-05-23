@@ -11,4 +11,9 @@ export class ProductsService {
   getAllProducts() {
     return this.httpService.getMethod('product');
   }
+
+  createProduct(data: any) {
+    return this.httpService.postMethod('product', data);
+  }
+
 }

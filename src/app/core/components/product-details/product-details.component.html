@@ -1,45 +1,40 @@
-<div class="home">
-  <h1>Add Products Here...</h1>
-  <!-- Form -->
-  <form [formGroup]="productsForm">
-    <div fxLayout="row" fxLayoutGap="5%" fxLayout.lt-md="column" fxLayoutGap.lt-md="0">
-      <!-- product name -->
-      <div fxLayout="row" fxFlex="50%" fxLayout.lt-sm="column" fxLayoutAlign="center center">
-        <mat-label fxFlex="40%">Product Name</mat-label>
-        <mat-form-field fxFlex="60%" appearance="outline">
-          <input matInput formControlName="productName">
-        </mat-form-field>
-      </div>
-      <!-- product description -->
-      <div fxLayout="row" fxFlex="50%" fxLayout.lt-sm="column" fxLayoutAlign="center center">
-        <mat-label fxFlex="40%">Product Description</mat-label>
-        <mat-form-field fxFlex="60%" appearance="outline">
-          <input matInput formControlName="description">
-        </mat-form-field>
-      </div>
-    </div>
-  
-    <div fxLayout="row" fxLayoutGap="5%" fxLayout.lt-md="column" fxLayoutGap.lt-md="0">
-      <!-- product Price -->
-      <div fxLayout="row" fxFlex="50%" fxLayout.lt-sm="column" fxLayoutAlign="center center">
-        <mat-label fxFlex="40%">Product Price</mat-label>
-        <mat-form-field fxFlex="60%" appearance="outline">
-          <input matInput formControlName="price">
-        </mat-form-field>
-      </div>
-      <!-- product Categories -->
-      <div fxLayout="row" fxFlex="50%" fxLayout.lt-sm="column" fxLayoutAlign="center center">
-        <mat-label fxFlex="40%">Product Categories</mat-label>
-        <mat-form-field fxFlex="60%" appearance="outline">
-          <mat-select formControlName="categoryId">
-            <mat-option *ngFor="let item of category" [value]="item?.id">{{item?.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
+<div class="home" fxLayout="row" fxLayoutAlign="center start" fxLayout.lt-sm="column">
 
-  </form>
-  <div fxLayoutAlign="center center">
-    <button mat-raised-button color="warn" (click)="onSave()">Save</button>
-  </div>
+  <!-- Form -->
+  <mat-card class="card form" fxFlex="40%" fxFlex.lt-md="70%" fxFlex.lt-sm="100%">
+    <div class="inner-card" fxLayoutAlign="center center">
+      <h1>Add Products Here...</h1>
+    </div>
+    <form [formGroup]="productsForm">
+      <div fxLayout="column" fxLayoutGap="3%" fxLayoutAlign="start start">
+        <!-- product name -->
+        <div class="inner-card" fxLayout="row" fxLayoutGap="3%" fxLayout.lt-sm="column"
+          fxLayoutAlign="space-between center">
+          <mat-label>Product Name</mat-label>
+          <mat-form-field appearance="outline">
+            <input matInput formControlName="name">
+          </mat-form-field>
+        </div>
+        <!-- product description -->
+        <div class="inner-card" fxLayout="row" fxLayoutGap="3%" fxLayout.lt-sm="column"
+          fxLayoutAlign="space-between center">
+          <mat-label>Product Description</mat-label>
+          <mat-form-field appearance="outline">
+            <input matInput formControlName="description">
+          </mat-form-field>
+        </div>
+        <!-- product Price -->
+        <div class="inner-card" fxLayout="row" fxLayoutGap="3%" fxLayout.lt-sm="column"
+          fxLayoutAlign="space-between center">
+          <mat-label>Product Price</mat-label>
+          <mat-form-field appearance="outline">
+            <input matInput formControlName="price">
+          </mat-form-field>
+        </div>
+        <div class="inner-card" fxLayoutAlign="center center">
+          <button mat-raised-button color="accent" (click)="onSave()">{{updateData ? 'Update': 'Submit'}}</button>
+        </div>
+      </div>
+    </form>
+  </mat-card>
 </div>
