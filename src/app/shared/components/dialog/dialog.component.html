@@ -1,8 +1,10 @@
-<h1 mat-dialog-header>Confirmation</h1>
-<mat-dialog-content>
-  <p>{{data?.content}}</p>
-</mat-dialog-content>
-<mat-dialog-actions fxLayoutAlign="end end">
-  <button mat-stroked-button color="primary" [mat-dialog-close]="false">No</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="true">Yes</button>
-</mat-dialog-actions>
+<div class="dialog-outer">
+  <h1 mat-dialog-header>Confirmation</h1>
+  <mat-dialog-content>
+    <p>{{data?.message}}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayoutAlign="end end">
+    <button mat-stroked-button color="primary" [mat-dialog-close]="false">No</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true">Yes</button>
+  </mat-dialog-actions>
+</div>

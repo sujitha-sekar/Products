@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: "http://local.getzenbasket.com:5000/"
+  apiUrl: "http://122.165.63.12:5000/"
 };
