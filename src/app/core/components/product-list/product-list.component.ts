@@ -7,15 +7,11 @@ import { DialogService } from '../../../shared/services/dialog.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { HttpRoutingService } from '../../services/http-routing.service';
 import { Router } from '@angular/router';
-
-export interface DataArray {
-  price: number;
-  color: string;
-}
 export interface ProductLists {
   id: number;
   name: string;
-  data: DataArray[];
+  description: string;
+  price: number;
 }
 @Component({
   selector: 'app-product-list',
@@ -29,9 +25,7 @@ export class ProductListComponent implements OnInit {
   dataSource = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
-  productList: ProductLists[] = [];
-  ELEMENT_DATA: any[] = []
+  ELEMENT_DATA : any[] = [];
   constructor(private productService: ProductsService,
     private dialogSevice: DialogService,
     private snackbarService: SnackbarService,
@@ -43,7 +37,7 @@ export class ProductListComponent implements OnInit {
     this.productService.getAllProducts().subscribe((res: any) => {
       console.log('All Products: ', res.productList);
       if (res) {
-        this.ELEMENT_DATA = res.productList?.rows
+        this.ELEMENT_DATA = res.productList?.rows;
         this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
@@ -71,14 +65,16 @@ export class ProductListComponent implements OnInit {
               this.ELEMENT_DATA.splice(index, 1);
               this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
               this.dataSource.paginator = this.paginator;
-              this.snackbarService.openSnackbar('Product deleted Successfully', 'Success')
+              this.snackbarService.openSnackbar('Product deleted Successfully', 'Success');
             }
-          } else {
-            this.snackbarService.openSnackbar('Error occuired while delete product', 'Error');
           }
-        })
+        }, (err) => {
+          if (err.error && err.error.error) {
+            this.snackbarService.openSnackbar('Error occuired while delete product', 'Error');            
+          };
+        });
       }
-    })
-  }
+    });
+  };
 
 }

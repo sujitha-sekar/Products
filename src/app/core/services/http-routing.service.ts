@@ -12,6 +12,10 @@ export class HttpRoutingService {
 
   apiUrl: string = environment.apiUrl;
 
+  getMessage(url: any) {
+    return this.httpRouting.get('./assets/' + url);
+  }
+
   getMethod(url: string) {
     return this.httpRouting.get(this.apiUrl + 'v1/' + url);
   }

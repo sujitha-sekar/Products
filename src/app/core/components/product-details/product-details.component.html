@@ -13,6 +13,8 @@
           <mat-label>Product Name</mat-label>
           <mat-form-field appearance="outline">
             <input matInput formControlName="name">
+            <mat-error *ngIf="productsForm?.get('name')?.hasError('required')">
+              {{messages.FILED_REQUIRD}}</mat-error>
           </mat-form-field>
         </div>
         <!-- product description -->
@@ -29,9 +31,16 @@
           <mat-label>Product Price</mat-label>
           <mat-form-field appearance="outline">
             <input matInput formControlName="price">
+            <mat-error *ngIf="productsForm?.get('price')?.hasError('required')">
+              {{messages.FILED_REQUIRD}}</mat-error>
+            <mat-error *ngIf="productsForm?.get('price')?.hasError('min')">
+              {{messages.PRICE_INVALID}}</mat-error>
+            <mat-error *ngIf="productsForm?.get('price')?.hasError('pattern')">
+              {{messages.PRICE_PATTEN}}</mat-error>
           </mat-form-field>
         </div>
-        <div class="inner-card" fxLayoutAlign="center center">
+        <div class="inner-card" fxLayout="row" fxLayoutGap="2%" fxLayoutAlign="center center">
+          <button mat-stroked-button color="accent" *ngIf="updateData" (click)="onNavigate()">Back</button>
           <button mat-raised-button color="accent" (click)="onSave()">{{updateData ? 'Update': 'Submit'}}</button>
         </div>
       </div>
