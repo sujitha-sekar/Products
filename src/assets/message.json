@@ -1,0 +1,5 @@
+{
+  "FILED_REQUIRD": "This fields is required",
+  "PRICE_INVALID": "Price must be at least 0.01.",
+  "PRICE_PATTEN": "Price must be valid with at most two decimal places."
+}
