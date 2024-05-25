@@ -1,14 +1,14 @@
 <div class="container">
-  
+
   <mat-card class="card">
     <h1>Product Lists...</h1>
   </mat-card>
-  
-    <!-- Filter -->
-    <mat-form-field>
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="filterData($event)" placeholder="name" #input>
-    </mat-form-field>
+
+  <!-- Filter -->
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="filterData($event)" placeholder="name" #input>
+  </mat-form-field>
 
   <!-- Table -->
   <div class="mat-elevation-z8 table-outer">

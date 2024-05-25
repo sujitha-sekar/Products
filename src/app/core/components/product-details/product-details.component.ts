@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { ProductsService } from '../../services/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpRoutingService } from '../../services/http-routing.service';
@@ -47,7 +47,7 @@ export class ProductDetailsComponent implements OnInit {
           }
         })
       }
-    })
+    });
 
     this.productsForm = new FormGroup({
       name: new FormControl(null, Validators.required),
