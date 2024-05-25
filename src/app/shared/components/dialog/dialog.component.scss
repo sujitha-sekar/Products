@@ -1,3 +1,11 @@
 .dialog-outer {
   padding: 20px 25px;
 }
+
+.mat-mdc-outlined-button:not(:disabled) {
+  color: #afadad !important;
+}
+
+.mat-mdc-outlined-button:not(:disabled) {
+  border-color: #afadad !important;
+}

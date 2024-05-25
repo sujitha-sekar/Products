@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ProductsService } from './products.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpRoutingService } from './http-routing.service';
@@ -13,10 +13,11 @@ class MockHttpService {
 
 describe('ProductsService', () => {
   let service: ProductsService;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
+      imports: [HttpClientModule, HttpClientTestingModule],
       providers: [
         { provide: HttpRoutingService, useClass: MockHttpService }
       ]
@@ -29,10 +30,15 @@ describe('ProductsService', () => {
   });
 
   it('should update message BehaviorSubject with the received message', () => {
+    const testMessage = { text: 'Test message' };
     const nextSpy = spyOn(service.message, 'next').and.callThrough();
     service.getMessage();
-    expect(nextSpy).toHaveBeenCalledWith({ text: 'Test message' });
+    const req = httpMock.expectOne('message.json');
+    expect(req.request.method).toBe('GET');
+    req.flush(testMessage);
+    expect(nextSpy).toHaveBeenCalledWith(testMessage);
   });
+
 
   it('should return a list of products when getAllProducts is called', () => {
     const products = service.getAllProducts();
