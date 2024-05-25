@@ -7,11 +7,12 @@
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: 600;
   text-transform: uppercase;
-  text-shadow: 1px 2px 1px rgb(116, 106, 106);
+  text-shadow: 1px 2px 1px rgb(173 169 169);
   text-align: center;
+  color: #999999;
 }
 
-.mat-mdc-radio-button ~ .mat-mdc-radio-button {
+.mat-mdc-radio-button~.mat-mdc-radio-button {
   margin-left: 16px;
 }
 
@@ -25,4 +26,12 @@
 
 .card button {
   width: fit-content;
+}
+
+.mat-mdc-outlined-button:not(:disabled) {
+  color: #afadad !important;
+}
+
+.mat-mdc-outlined-button:not(:disabled) {
+  border-color: #afadad !important;
 }

@@ -3,35 +3,34 @@
 
 // Define $custom-primary-color here in styles.scss
 $custom-primary-color: (
-  50 : #f6f6f6,
-  100 : #e8e8e8,
-  200 : #d8d8d8,
-  300 : #c8c8c8,
-  400 : #bdbdbd,
-  500 : #b1b1b1,
-  600 : #aaaaaa,
-  700 : #a1a1a1,
-  800 : #989898,
-  900 : #888888,
+  50 : #f5f5f5,
+  100 : #e7e6e6,
+  200 : #d7d6d6,
+  300 : #c7c6c6,
+  400 : #bbb9b9,
+  500 : #afadad,
+  600 : #a8a6a6,
+  700 : #9f9c9c,
+  800 : #969393,
+  900 : #868383,
   A100 : #ffffff,
-  A200 : #fdebeb,
-  A400 : #ffb6b6,
-  A700 : #ff9c9c,
-  contrast: (
-      50 : #000000,
-      100 : #000000,
-      200 : #000000,
-      300 : #000000,
-      400 : #000000,
-      500 : #000000,
-      600 : #000000,
-      700 : #000000,
-      800 : #000000,
-      900 : #000000,
-      A100 : #000000,
-      A200 : #000000,
-      A400 : #000000,
-      A700 : #000000,
+  A200 : #fce6e6,
+  A400 : #ffb0b0,
+  A700 : #ff9696,
+  contrast: (50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #000000,
+    700 : #000000,
+    800 : #000000,
+    900 : #000000,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
   )
 );
 
@@ -64,31 +63,31 @@ mat-icon:hover {
   cursor: pointer;
 }
 
-.mat-mdc-snack-bar-container.snackbar-success{
+.mat-mdc-snack-bar-container.snackbar-success {
   --mdc-snackbar-container-color: green;
   --mdc-snackbar-supporting-text-color: rgba(255, 255, 255, 0.87);
   --mat-snack-bar-button-color: #ff4081;
 }
 
-.mat-mdc-snack-bar-container.snackbar-warning{
+.mat-mdc-snack-bar-container.snackbar-warning {
   --mdc-snackbar-container-color: #ec942c;
   --mdc-snackbar-supporting-text-color: rgba(255, 255, 255, 0.87);
   --mat-snack-bar-button-color: #ff4081;
 }
 
-.mat-mdc-snack-bar-container.snackbar-error{
+.mat-mdc-snack-bar-container.snackbar-error {
   --mdc-snackbar-container-color: #ec2c2c;
   --mdc-snackbar-supporting-text-color: rgba(255, 255, 255, 0.87);
   --mat-snack-bar-button-color: #ff4081;
 }
 
-.mat-mdc-snack-bar-container.snackbar-info{
+.mat-mdc-snack-bar-container.snackbar-info {
   --mdc-snackbar-container-color: #3f2cec;
   --mdc-snackbar-supporting-text-color: rgba(255, 255, 255, 0.87);
   --mat-snack-bar-button-color: #ff4081;
 }
 
-.mat-mdc-snack-bar-container.snackbar-default{
+.mat-mdc-snack-bar-container.snackbar-default {
   --mdc-snackbar-container-color: #807e7d;
   --mdc-snackbar-supporting-text-color: rgba(255, 255, 255, 0.87);
   --mat-snack-bar-button-color: #ff4081;
@@ -97,4 +96,20 @@ mat-icon:hover {
 .card {
   padding: 10px 15px;
   margin-bottom: 50px;
+}
+
+.mat-toolbar.mat-primary {
+  --mat-toolbar-container-text-color: white;
+}
+
+.mat-mdc-raised-button.mat-primary {
+  --mdc-protected-button-label-text-color: #fff;
+}
+
+.mat-mdc-outlined-button:not(:disabled) {
+  border-color: rgb(255 255 255) !important;
+}
+
+.mat-mdc-outlined-button:not(:disabled) {
+  color: white !important;
 }
