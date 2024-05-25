@@ -8,10 +8,12 @@ import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar'
 })
 export class SnackbarComponent {
 
-  constructor(private snackbarRef: MatSnackBarRef<SnackbarComponent>, @Inject(MAT_SNACK_BAR_DATA) public data: any) {}
-
+  constructor(private snackbarRef: MatSnackBarRef<SnackbarComponent>, @Inject(MAT_SNACK_BAR_DATA) public data: any) { }
+  /**
+   * Method to dismiss the sanckbar
+   */
   onclose() {
-    if(this.snackbarRef) {
+    if (this.snackbarRef) {
       this.snackbarRef.dismiss();
     }
   }

@@ -1,5 +1,5 @@
 .container {
-  padding: 20px;
+  padding: 20px 35px;
 }
 
 .container h1 {
@@ -14,4 +14,29 @@
 
 .table-outer {
   padding: 15px;
+  margin: 0px 50px;
+}
+
+@media screen and (max-width: 599px) {
+  .table-outer {
+    margin: 0px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+}
+
+.mat-mdc-table {
+  width: 100%;
+  max-height: 100px;
+  overflow: auto;
+}
+
+.mat-mdc-row:hover {
+  background-color: rgba(230, 228, 228, 0.6);
+}
+
+.mat-column-name {
+  height: 70px;
 }

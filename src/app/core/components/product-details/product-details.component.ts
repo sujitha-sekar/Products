@@ -4,6 +4,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { ProductsService } from '../../services/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpRoutingService } from '../../services/http-routing.service';
+import { Message, ProductDetails } from '../../models/product-details.model';
 
 @Component({
   selector: 'app-product-details',
@@ -11,36 +12,61 @@ import { HttpRoutingService } from '../../services/http-routing.service';
   styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit {
-
+  /**
+   * Form group for managing the product form.
+   * @type {FormGroup}
+   */
   productsForm!: FormGroup;
-  category: any;
+  /**
+   * Flag to determine if the form is for updating an existing product.
+   * @type {boolean}
+   */
   updateData: boolean = false;
+  /**
+   * Object to hold route parameters data.
+   * @type {object}
+   */
   paramData = {
     id: '',
     data: ''
-  }
-  productDetails: any;
-  messages: any;
-
+  };
+  /**
+   * Object to hold product details retrieved from the server.
+   */
+  productDetails!: ProductDetails;
+  /**
+   * Variable to hold messages received from the product service.
+   * @type {Message}
+   */
+  messages!: Message;
+  /**
+   * Constructor to inject necessary services.
+   * @param snackbarService Service to display snackbar notifications.
+   * @param productService Service to manage product operations.
+   * @param route Service to access route parameters.
+   * @param httpService Service to handle HTTP requests.
+   * @param router Service to handle navigation.
+   */
   constructor(private snackbarService: SnackbarService,
     private productService: ProductsService,
     private route: ActivatedRoute,
     private httpService: HttpRoutingService,
     private router: Router
   ) { }
-
+  /**
+    * Angular lifecycle hook that is called after the component's view has been fully initialized.
+    */
   ngOnInit(): void {
-
+    // Subscribe to messages from the product service.
     this.productService.message.subscribe(res => this.messages = res);
 
+    // Subscribe to route parameters to retrieve product details if an ID is present.
     this.route.params.subscribe((res: any) => {
-      console.log(res);
       if (res && res?.id) {
         this.paramData.id = res?.id;
         this.paramData.data = res?.data;
         this.httpService.getProductById(this.paramData.id).subscribe((res: any) => {
           this.productDetails = res.productDetails;
-          console.log('productDetails', this.productDetails);
           if (this.productDetails) {
             this.updateData = true;
             this.formInitalize();
@@ -49,13 +75,16 @@ export class ProductDetailsComponent implements OnInit {
       }
     });
 
+    // Initialize the product form with default values.
     this.productsForm = new FormGroup({
       name: new FormControl(null, Validators.required),
       description: new FormControl(null),
       price: new FormControl(null, [Validators.required, Validators.min(0.01), Validators.pattern(/^\d+(\.\d{1,2})?$/)])
     });
   };
-
+  /**
+   * Method to initialize the product form with existing product details.
+   */
   formInitalize() {
     this.productsForm = new FormGroup({
       name: new FormControl(this.productDetails && this.productDetails?.name ? this.productDetails?.name : null, Validators.required),
@@ -63,15 +92,16 @@ export class ProductDetailsComponent implements OnInit {
       price: new FormControl(this.productDetails && this.productDetails ? this.productDetails?.price : null, [Validators.required, Validators.min(0.01), Validators.pattern(/^\d+(\.\d{1,2})?$/)])
     });
   }
-
+  /**
+   * Method to handle form submission for saving or updating a product.
+   */
   onSave() {
     if (this.productsForm.valid) {
-      console.log('Form: ', this.productsForm.value);
       if (!this.updateData) {
+        // Create new product
         this.productService.createProduct(this.productsForm.value).subscribe((res: any) => {
           if (res) {
             this.productsForm.reset();
-            console.log('Created:', res);
             this.snackbarService.openSnackbar('Product Saved successfully', 'Success');
           }
         }, (err) => {
@@ -82,6 +112,7 @@ export class ProductDetailsComponent implements OnInit {
       } else {
         this.productsForm.value.id = +this.paramData?.id;
         if (this.productsForm.dirty) {
+          // Update existing product
           this.httpService.updateProduct(this.productsForm.value.id, this.productsForm.value).subscribe((res: any) => {
             if (res) {
               this.productsForm.markAsPristine();
@@ -101,7 +132,9 @@ export class ProductDetailsComponent implements OnInit {
       this.snackbarService.openSnackbar('Please fill the mantatory field', 'Warning');
     }
   };
-
+  /**
+   * Method to navigate to the product list page.
+   */
   onNavigate() {
     this.router.navigate(['/app/productList']);
   }
