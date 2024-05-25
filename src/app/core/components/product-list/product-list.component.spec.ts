@@ -18,12 +18,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 let result: boolean;
 class MockDialogService {
   openConfirmationDialog(message: string) {
     return {
-      afterClosed: () => of(true) // Return a mock Observable<boolean>
+      afterClosed: () => of(true)
     };
   }
 }
@@ -63,6 +64,7 @@ describe('ProductListComponent', () => {
         MatCardModule, MatButtonModule, MatIconModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatInputModule,
       ],
       declarations: [ProductListComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: SnackbarService, useClass: MockSnackbarService },
         { provide: DialogService, useClass: MockDialogService },
@@ -87,8 +89,8 @@ describe('ProductListComponent', () => {
 
   it('should call ngOnInit and populate dataSource', fakeAsync(() => {
     const mockData = [
-      { id: 1, name: 'Test Product 1', price: 100 },
-      { id: 2, name: 'Test Product 2', price: 200 },
+      { id: 1, name: 'Test Product 1', price: 100, description: 'wodden table' },
+      { id: 2, name: 'Test Product 2', price: 200, description: 'wodden table' },
     ];
     spyOn(productService, 'getAllProducts').and.returnValue(of({ productList: { rows: mockData } }));
 
@@ -125,7 +127,7 @@ describe('ProductListComponent', () => {
 
   it('should call onDelete', () => {
     const data = { id: 2 };
-    component.ELEMENT_DATA = [{ id: 2, name: 'table', price: 200 }];
+    component.ELEMENT_DATA = [{ id: 2, name: 'table', price: 200, description: 'wodden table' }];
     result = true;
     spyOn(dialogService, 'openConfirmationDialog').and.returnValue({
       afterClosed: () => of(result)
@@ -141,7 +143,10 @@ describe('ProductListComponent', () => {
 
   it('should call onDelete and handle error', () => {
     const data = { id: 2 };
-    component.ELEMENT_DATA = [{ id: 2, name: 'table', price: 200 }];
+    component.ELEMENT_DATA = [{
+      id: 2, name: 'table', price: 200,
+      description: 'wodden table'
+    }];
     result = true;
     spyOn(dialogService, 'openConfirmationDialog').and.returnValue({
       afterClosed: () => of(result)

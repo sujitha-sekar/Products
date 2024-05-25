@@ -5,6 +5,7 @@ import { ProductsService } from '../../services/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpRoutingService } from '../../services/http-routing.service';
 import { Message, ProductDetails } from '../../models/product-details.model';
+import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-product-details',
@@ -61,17 +62,21 @@ export class ProductDetailsComponent implements OnInit {
     this.productService.message.subscribe(res => this.messages = res);
 
     // Subscribe to route parameters to retrieve product details if an ID is present.
-    this.route.params.subscribe((res: any) => {
-      if (res && res?.id) {
-        this.paramData.id = res?.id;
-        this.paramData.data = res?.data;
-        this.httpService.getProductById(this.paramData.id).subscribe((res: any) => {
-          this.productDetails = res.productDetails;
-          if (this.productDetails) {
-            this.updateData = true;
-            this.formInitalize();
-          }
-        })
+    this.route.params.pipe(
+      switchMap((res: any) => {
+        if (res && res.id) {
+          this.paramData.id = res.id;
+          this.paramData.data = res.data;
+          return this.httpService.getProductById(this.paramData.id);
+        } else {
+          return of(null);
+        }
+      })
+    ).subscribe((res: any) => {
+      if (res && res.productDetails) {
+        this.productDetails = res.productDetails;
+        this.updateData = true;
+        this.formInitalize();
       }
     });
 

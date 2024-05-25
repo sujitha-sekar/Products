@@ -71,8 +71,9 @@ export class ProductListComponent implements OnInit {
    * @param data The data of the product to be edited.
    */
   onEdit(data: any) {
-    this.router.navigate(['/app/ProductDetails', 'edit', data?.id]);
+    this.router.navigate(['/app/productDetails', 'edit', data?.id]);
   }
+
   /**
    * Delete product data in the table.
    * @param data The data of the products to be deleted.

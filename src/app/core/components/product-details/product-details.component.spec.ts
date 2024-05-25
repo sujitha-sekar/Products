@@ -1,12 +1,73 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProductDetailsComponent } from './product-details.component';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, of } from 'rxjs';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { ProductsService } from '../../services/products.service';
 import { HttpRoutingService } from '../../services/http-routing.service';
-// import { spyOn } from 'jasmine';
+import { ProductDetails } from '../../models/product-details.model';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+class MockSnackbarService {
+  openSnackbar(message: string, action: string, duration?: number, panelClass?: string) { }
+}
+class MockRouter {
+  navigate(url: string) {
+    return url
+  }
+}
+class MockProductService {
+  messages = new BehaviorSubject<any>({});
+
+  createProduct() {
+    return of({
+      productDetails: {
+        isDeleted: false,
+        created: "2024-05-24T13:19:16.900Z",
+        modified: "2024-05-24T13:19:16.900Z",
+        id: 855,
+        name: "Pen",
+        description: "Sharp point",
+        price: 1200
+      }
+    });
+  }
+}
+
+class MockHttpService {
+
+  getProductById(id: string) {
+    return of({
+      productDetails: {
+        id: 850,
+        name: "hello",
+        description: "12",
+        price: 1200,
+        isDeleted: false,
+        created: "2024-05-24T13:09:13.312Z",
+        modified: "2024-05-24T13:09:13.312Z"
+      },
+      success: true
+    });
+  }
+
+  updateProduct() {
+    return of({
+      updateStatus: true,
+      success: true
+    });
+  }
+}
+
+class MockActivatedRoute {
+  private paramsSubject = new BehaviorSubject<any>({ id: '1', data: 'testData' });
+  params = this.paramsSubject.asObservable();
+}
 
 describe('ProductDetailsComponent', () => {
   let component: ProductDetailsComponent;
@@ -17,28 +78,30 @@ describe('ProductDetailsComponent', () => {
   let snackbarService: SnackbarService;
 
   beforeEach(async () => {
-    const productServiceSpy = jasmine.createSpyObj('ProductsService', ['createProduct']);
-    const httpServiceSpy = jasmine.createSpyObj('HttpRoutingService', ['getProductById', 'updateProduct']);
-    const snackbarServiceSpy = jasmine.createSpyObj('SnackbarService', ['openSnackbar']);
-
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       declarations: [ProductDetailsComponent],
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, RouterTestingModule,
+        FormsModule, HttpClientModule
+      ],
       providers: [
-        { provide: ProductsService, useValue: productServiceSpy },
-        { provide: HttpRoutingService, useValue: httpServiceSpy },
-        { provide: ActivatedRoute, useValue: { params: of({ id: '1', data: 'testData' }) } },
-        { provide: Router, useValue: { navigate: jasmine.createSpy('navigate') } },
-        { provide: SnackbarService, useValue: snackbarServiceSpy }
+        { provide: SnackbarService, useClass: MockSnackbarService },
+        { provide: Router, useClass: MockRouter },
+        { provide: ActivatedRoute, useClass: MockActivatedRoute },
+        { provide: HttpRoutingService, useClass: MockHttpService },
+        { provide: ProductsService, useClass: MockProductService }
       ]
-    }).compileComponents();
-
+    });
     fixture = TestBed.createComponent(ProductDetailsComponent);
     component = fixture.componentInstance;
     productService = TestBed.inject(ProductsService);
     httpService = TestBed.inject(HttpRoutingService);
     router = TestBed.inject(Router);
     snackbarService = TestBed.inject(SnackbarService);
+    let data = component.productsForm = new FormGroup({
+      name: new FormControl('Table'),
+      price: new FormControl('344440'),
+      description: new FormControl('description')
+    })
   });
 
   it('should create', () => {
@@ -46,12 +109,10 @@ describe('ProductDetailsComponent', () => {
   });
 
   it('should initialize form with product details when route params are present', () => {
-    const productDetails = { id: '1', name: 'Test Product', description: 'Test Description', price: 100 };
-    // httpService.getProductById.and.returnValue(of({ productDetails }));
+    const productDetails: ProductDetails = { id: 1, name: 'Test Product', description: 'Test Description', price: 100 };
     spyOn(httpService, 'getProductById').and.returnValue(of({}));
-
     component.ngOnInit();
-    expect(httpService.getProductById).toHaveBeenCalledWith('1');
+    expect(httpService.getProductById).toHaveBeenCalledWith(1);
     expect(component.productDetails).toEqual(productDetails);
     expect(component.productsForm.value).toEqual(productDetails);
   });
@@ -64,7 +125,6 @@ describe('ProductDetailsComponent', () => {
 
   it('should create product and show success message', () => {
     const formData = { name: 'Test Product', description: 'Test Description', price: 100 };
-    // spyOn(httpService, 'createProduct').and.returnValue(of({}));
     component.productsForm.setValue(formData);
     component.onSave();
     expect(productService.createProduct).toHaveBeenCalledWith(formData);
@@ -73,18 +133,22 @@ describe('ProductDetailsComponent', () => {
   });
 
   it('should update product and navigate to product list', () => {
-    const formData = { id: '1', name: 'Test Product', description: 'Test Description', price: 100 };
+    const formData = { id: 12, name: 'Test Product', description: 'Test Description', price: 100 };
     spyOn(httpService, 'updateProduct').and.returnValue(of({}));
     component.updateData = true;
-    component.paramData.id = '1';
+    component.paramData.id = '12';
     component.productsForm.setValue(formData);
     component.onSave();
-    expect(httpService.updateProduct).toHaveBeenCalledWith('1', formData);
+    expect(httpService.updateProduct).toHaveBeenCalledWith('12', formData);
     expect(snackbarService.openSnackbar).toHaveBeenCalledWith('Product updated Successfully', 'Success');
     expect(router.navigate).toHaveBeenCalledWith(['/app/productList']);
   });
 
+
   it('should show warning message when form is invalid', () => {
+    component.productsForm = new FormGroup({
+      name: new FormControl('', Validators.required)
+    });
     component.productsForm.setErrors({ invalid: true });
     component.onSave();
     expect(snackbarService.openSnackbar).toHaveBeenCalledWith('Please fill the mantatory field', 'Warning');

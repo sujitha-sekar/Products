@@ -31,7 +31,7 @@
           fxLayoutAlign="space-between center">
           <mat-label>Product Price</mat-label>
           <mat-form-field appearance="outline">
-            <input matInput formControlName="price">
+            <input appInputValid matInput formControlName="price">
             <mat-error *ngIf="productsForm?.get('price')?.hasError('required')">
               {{messages.FILED_REQUIRD}}</mat-error>
             <mat-error *ngIf="productsForm?.get('price')?.hasError('min')">
