@@ -8,7 +8,11 @@ import { DialogComponent } from '../components/dialog/dialog.component';
 export class DialogService {
 
   constructor(private matDialog: MatDialog) { }
-
+  /**
+   * Opens a confirmation dialog with a specified message.
+   * @param message The message to be displayed in the confirmation dialog.
+   * @returns A reference to the dialog instance, which can be used to subscribe to the dialog's close event.
+   */
   openConfirmationDialog(message: string) {
     const dialogRef = this.matDialog.open(DialogComponent, {
       data: {

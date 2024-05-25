@@ -24,6 +24,10 @@
   width: 100%;
 }
 
+.margin {
+  margin-bottom: 80px;
+}
+
 .card button {
   width: fit-content;
 }
@@ -34,4 +38,25 @@
 
 .mat-mdc-outlined-button:not(:disabled) {
   border-color: #afadad !important;
+}
+
+.round {
+  position: absolute;
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+  background-color: #afadad;
+  top: 25%;
+  left: 25%;
+}
+
+.bottom {
+  position: absolute;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  background-color: #afadad;
+  left: 58%;
+  top: 78%;
+  z-index: -1;
 }
