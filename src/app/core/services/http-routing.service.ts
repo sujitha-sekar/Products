@@ -12,29 +12,29 @@ export class HttpRoutingService {
 
   apiUrl: string = environment.apiUrl;
 
-  getMessage(url: any) {
+  getMessage(url: any): Observable<any> {
     return this.httpRouting.get('./assets/' + url);
   }
 
-  getMethod(url: string) {
+  getMethod(url: string): Observable<any> {
     return this.httpRouting.get(this.apiUrl + 'v1/' + url);
   }
 
-  postMethod(url: any, data: any) {
+  postMethod(url: string, data: any): Observable<any> {
     return this.httpRouting.post(this.apiUrl + 'v1/' + url, data)
   }
 
-  deleteProduct(productId: string): Observable<any> {
+  deleteProduct(productId: number): Observable<any> {
     return this.httpRouting.delete(this.apiUrl + 'v1/product/' + productId);
   }
 
-  getProductById(productId: string): Observable<any> {
+  getProductById(productId: any): Observable<any> {
     return this.httpRouting.get(this.apiUrl + 'v1/product/' + productId);
   }
 
-  updateProduct(url:any, data: any) {
-    return this.httpRouting.put(this.apiUrl + 'v1/product', data,{
-      params : {id : url}
+  updateProduct(url: any, data: any) {
+    return this.httpRouting.put(this.apiUrl + 'v1/product', data, {
+      params: { id: url }
     });
   }
 }

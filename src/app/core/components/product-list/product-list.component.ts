@@ -25,7 +25,7 @@ export class ProductListComponent implements OnInit {
   dataSource = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  ELEMENT_DATA : any[] = [];
+  ELEMENT_DATA: any[] = [];
   constructor(private productService: ProductsService,
     private dialogSevice: DialogService,
     private snackbarService: SnackbarService,
@@ -70,7 +70,7 @@ export class ProductListComponent implements OnInit {
           }
         }, (err) => {
           if (err.error && err.error.error) {
-            this.snackbarService.openSnackbar('Error occuired while delete product', 'Error');            
+            this.snackbarService.openSnackbar('Error occurred while deleting product', 'Error');
           };
         });
       }
